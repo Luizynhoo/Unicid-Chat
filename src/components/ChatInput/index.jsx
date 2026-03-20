@@ -1,0 +1,47 @@
+import React, { useRef, useEffect } from 'react';
+import { Send } from 'lucide-react';
+import './ChatInput.css';
+
+export function ChatInput({ value, onChange, onSend, disabled }) {
+  const textareaRef = useRef(null);
+
+  useEffect(() => {
+    const el = textareaRef.current;
+    if (!el) return;
+    el.style.height = 'auto';
+    el.style.height = `${Math.min(el.scrollHeight, 160)}px`;
+  }, [value]);
+
+  function handleKeyDown(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (!disabled && value.trim()) onSend(value);
+    }
+  }
+
+  return (
+    <div className="chat-input">
+      <div className="chat-input__wrapper">
+        <textarea
+          ref={textareaRef}
+          className="chat-input__textarea"
+          placeholder="Digite a sua dúvida..."
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onKeyDown={handleKeyDown}
+          disabled={disabled}
+          rows={1}
+          aria-label="Campo de mensagem"
+        />
+        <button
+          className="chat-input__send"
+          onClick={() => onSend(value)}
+          disabled={disabled || !value.trim()}
+          aria-label="Enviar mensagem"
+        >
+          <Send size={18} />
+        </button>
+      </div>
+    </div>
+  );
+}

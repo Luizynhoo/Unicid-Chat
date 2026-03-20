@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=DM+Mono:wght@400;500&display=swap');
+
+:root {
+
+  --color-sidebar-bg:      #1a2132;
+  --color-sidebar-hover:   rgba(0,168,142,.2);
+  --color-sidebar-active:  rgba(0, 168, 143, 0.644);
+  --color-sidebar-divider: rgba(255,255,255,0.08);
+  --color-sidebar-scroll:  rgba(255,255,255,0.12);
+
+  --color-chat-bg:     #f5f6f8;
+  --color-border:      #e2e5ea;
+
+  --color-bubble-assistant: #ffffff;
+  --color-bubble-user:      #1e4fd8;
+  --radius-bubble:          18px;
+
+
+  --color-input-bg:          #ffffff;
+  --color-input-border:      #dde1e9;
+
+
+  --color-text-primary:     #1a2132;
+  --color-text-muted:       #B8C7CE;
+  --color-text-placeholder: #adb5bf;
+  --color-details:        #00a88f;
+
+
+  --font-family: 'DM Sans', system-ui, sans-serif;
+  --font-mono:   'DM Mono', monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--color-chat-bg);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  font-family: inherit;
+}
+
+textarea {
+  font-family: inherit;
+}
+
+img, svg {
+  display: block;
+}
+
+@media (min-width: 1024px) {
+  .chat-area__menu-btn {
+    display: none;
+  }
+}
