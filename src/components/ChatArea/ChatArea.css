@@ -40,7 +40,7 @@
   display: block;
   width: 20px;
   height: 2px;
-  background: var(--color-text-muted);
+  background: var(--color-text-primary);
   border-radius: 1px;
   transition: background 0.2s;
 }
@@ -49,12 +49,11 @@
   background: var(--color-text-primary);
 }
 
-/* Title group */
 .chat-area__header-title {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--color-text-muted);
+  color: var(--color-text-primary);
 }
 
 .chat-area__header-icon {
