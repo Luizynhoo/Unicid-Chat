@@ -17,7 +17,14 @@ def perguntar_ia(prompt: str) -> str:
     data = {
         "model": "stepfun/step-3.5-flash:free",
         "messages": [
-            {"role": "user", "content": prompt}
+            {
+                "role": "system", 
+                "content": "Responda de forma direta, clara e resumida. Evite textos longos."
+            },
+            {
+                "role": "user", 
+                "content": prompt
+            }
         ]
     }
 

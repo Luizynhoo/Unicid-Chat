@@ -1,6 +1,6 @@
 import React from 'react';
 import { Bot } from 'lucide-react';
-import { WelcomeMessage } from '../WelcomeMessage';
+import { WelcomeMessage } from '../../features/WelcomeMessage';
 import './MessageBubble.css';
 
 export function MessageBubble({ message }) {
