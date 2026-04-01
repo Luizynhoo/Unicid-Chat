@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { Plus } from 'lucide-react';
-import { MessageBubble, TypingIndicator } from '../MessageBubble';
-import { ChatInput } from '../ChatInput';
+import { MessageBubble, TypingIndicator } from '../../shared/MessageBubble';
+import { ChatInput } from '../../shared/ChatInput';
 import './ChatArea.css';
 
 export function ChatArea({ messages, input, onInputChange, onSend, onNewConversation, isTyping }) {

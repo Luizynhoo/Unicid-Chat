@@ -1,5 +1,5 @@
 import React from 'react';
-import { welcomeCapabilities } from '../../data/navItems';
+import { welcomeCapabilities } from '../../../data/navItems';
 import './WelcomeMessage.css';
 
 export function WelcomeMessage() {
