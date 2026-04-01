@@ -1,47 +1,42 @@
-# Dependências
-node_modules/
 
-# Build
+.env
+.env.*
+*.env
+
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+venv/
+.env/
+.venv/
+
+
+node_modules/
 dist/
+dist-ssr/
 build/
 
-# Logs
-logs
+
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Arquivos de ambiente
-.env
-.env.*
-!.env.example
 
-# Cache
-.cache/
-.vite/
-*.tsbuildinfo
-
-# Sistema operacional
-.DS_Store
-Thumbs.db
-
-# IDEs / editores
-.vscode/
+.vscode/*
+!.vscode/extensions.json
 .idea/
-*.swp
-*.swo
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
-# Arquivos temporários
-.tmp/
-.temp/
 
-# Coverage 
-coverage/
-
-# Docker 
-docker-compose.override.yml
-
-# Outros
 *.local
+coverage/
