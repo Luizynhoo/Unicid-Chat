@@ -6,7 +6,6 @@
   background: var(--color-chat-bg);
 }
 
-/* ── Header ── */
 .chat-area__header {
   display: flex;
   align-items: center;
@@ -24,13 +23,11 @@
   gap: 14px;
 }
 
-/* Hamburger */
 .chat-area__menu-btn {
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 5px;
-  background: none;
   border: none;
   cursor: pointer;
   padding: 4px;
@@ -40,25 +37,24 @@
   display: block;
   width: 20px;
   height: 2px;
-  background: var(--color-text-primary);
+  background-color: var(--color-text-primary);
   border-radius: 1px;
   transition: background 0.2s;
 }
 
 .chat-area__menu-btn:hover span {
-  background: var(--color-text-primary);
+  background-color: var(--color-text-primary);
 }
 
 .chat-area__header-title {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--color-text-primary);
+  color: var(--color-input-bg);
 }
 
 .chat-area__header-icon {
-  width: 18px;
-  height: 18px;
+  color: var(--color-details);
 }
 
 .chat-area__title {
@@ -68,14 +64,13 @@
   margin: 0;
 }
 
-/* New conversation button */
 .chat-area__new-btn {
   display: flex;
   align-items: center;
   gap: 6px;
   padding: 8px 16px;
-  background: var(--color-brand);
-  color: #fff;
+  background-color: #1a2132;
+  color: var(--color-input-bg);
   border: none;
   border-radius: 8px;
   font-size: 0.83rem;
@@ -86,18 +81,18 @@
 }
 
 .chat-area__new-btn:hover {
-  background: var(--color-brand-dark);
+  background: #1a2132;
   transform: translateY(-1px);
 }
 
-/* ── Messages area ── */
 .chat-area__messages {
   flex: 1;
   overflow-y: auto;
-  padding: 28px 32px;
+  padding: 28px 32px 48px;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  margin-bottom: 30px;
   scrollbar-width: thin;
   scrollbar-color: var(--color-border) transparent;
 }

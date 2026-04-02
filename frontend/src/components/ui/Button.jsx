@@ -1,7 +1,9 @@
 import "../../styles/ui/Button.css";
 
-export default function Button(){
-    return(
-        <button className="btn-sair">Sair</button>
+export default function Button({ onClick, children }) {
+    return (
+        <button className="btn-sair" onClick={onClick}>
+            {children}
+        </button>
     )
 }

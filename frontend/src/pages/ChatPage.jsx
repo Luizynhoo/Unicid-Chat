@@ -52,7 +52,7 @@ export default function ChatPage() {
         }
     };
 
-    const newConversation = () => {
+    const newConversation = async () => {
         setMessages([
             {
                 id: 0,
@@ -64,6 +64,15 @@ export default function ChatPage() {
         ]);
         setInput('');
         setIsTyping(false);
+
+        try {
+            //criar endpoint específico para isso ainda
+            // await api.post('/chat/nova-conversa');
+        } catch (error) {
+            console.log('backend ainda não implementado');
+        }
+
+
     };
 
     return (

@@ -1,8 +1,9 @@
 import React, { useRef, useEffect } from 'react';
-import { Plus } from 'lucide-react';
+import { Plus, MessageSquare } from 'lucide-react';
 import { MessageBubble, TypingIndicator } from '../../shared/MessageBubble';
 import { ChatInput } from '../../shared/ChatInput';
 import './ChatArea.css';
+
 
 export function ChatArea({ messages, input, onInputChange, onSend, onNewConversation, isTyping }) {
   const bottomRef = useRef(null);
@@ -13,7 +14,6 @@ export function ChatArea({ messages, input, onInputChange, onSend, onNewConversa
 
   return (
     <section className="chat-area" aria-label="Área do chat">
-      {/* ── Header ── */}
       <header className="chat-area__header">
         <div className="chat-area__header-left">
           <button className="chat-area__menu-btn" aria-label="Menu">
@@ -22,12 +22,7 @@ export function ChatArea({ messages, input, onInputChange, onSend, onNewConversa
             <span />
           </button>
           <div className="chat-area__header-title">
-            <svg className="chat-area__header-icon" viewBox="0 0 24 24" fill="none"
-                 xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"
-                    stroke="currentColor" strokeWidth="2"
-                    strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+            <MessageSquare size={16} className='chat-area__header-icon'/>
             <h1 className="chat-area__title">Assistente Virtual UNICID</h1>
           </div>
         </div>
@@ -38,16 +33,14 @@ export function ChatArea({ messages, input, onInputChange, onSend, onNewConversa
         </button>
       </header>
 
-      {/* ── Messages ── */}
       <main className="chat-area__messages" role="log" aria-live="polite" aria-label="Mensagens">
         {messages.map((msg) => (
           <MessageBubble key={msg.id} message={msg} />
         ))}
         {isTyping && <TypingIndicator />}
-        <div ref={bottomRef} aria-hidden="true" />
+        <div ref={bottomRef} aria-hidden="true" style={{ height: 1 }} />
       </main>
 
-      {/* ── Input ── */}
       <ChatInput
         value={input}
         onChange={onInputChange}
