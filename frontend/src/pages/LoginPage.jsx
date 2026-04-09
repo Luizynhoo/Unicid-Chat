@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../services/authService";
 import '../styles/pages/LoginPage.css';
+import SplashScreen from "../components/shared/SplashScreen";
 
 import logo from "../assets/logo-negativo_17.svg";
 
@@ -9,26 +10,26 @@ export default function LoginPage() {
     const [usuario, setUsuario] = useState("");
     const [senha, setSenha] = useState("");
     const [loading, setLoading] = useState(false);
+    const [showSplash, setShowSplash] = useState(false);
+    const [destino, setDestino] = useState("/chat");
     const navigate = useNavigate();
 
     const handleLogin = async () => {
         if (!usuario || !senha) {
-            alert("Por favor, preencha ambos os campos de usuário e senha.");
+            alert("Por favor, preencha ambos os campos.");
             return;
         }
         setLoading(true);
         try {
             const data = await login(usuario, senha);
             localStorage.setItem("tipo", data.tipo);
-            if (data.tipo === "admin") {
-                navigate("/admin");
-            } else {
-                navigate("/chat");
-            }
+
+            const rota = data.tipo === "admin" ? "/admin" : "/chat";
+            setDestino(rota);
+            setShowSplash(true);
         } catch (error) {
-            alert("Falha no login. Verifique suas credenciais e tente novamente.");
+            alert("Falha no login. Verifique suas credenciais.");
             console.error(error);
-        } finally {
             setLoading(false);
         }
     };
@@ -37,8 +38,14 @@ export default function LoginPage() {
         if (e.key === "Enter") handleLogin();
     };
 
+
     return (
         <>
+
+            {showSplash && (
+                <SplashScreen onFinish={() => navigate(destino)} />
+            )}
+
             <div className="login-root">
 
                 <div className="login-panel">

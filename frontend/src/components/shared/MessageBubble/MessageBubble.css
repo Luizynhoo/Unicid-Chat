@@ -10,21 +10,19 @@
   to   { opacity: 1; transform: translateY(0);   }
 }
 
-/* User bubble: right-aligned */
 .bubble--user {
   flex-direction: row-reverse;
   align-self: flex-end;
   margin-left: auto;
 }
 
-/* Avatar */
 .bubble__avatar {
   width: 36px;
   height: 36px;
   min-width: 36px;
   border-radius: 50%;
   background: var(--color-brand);
-  color: #fff;
+  color: var(--color-details);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,7 +30,6 @@
   margin-top: 2px;
 }
 
-/* Body */
 .bubble__body {
   display: flex;
   flex-direction: column;
@@ -46,7 +43,6 @@
   letter-spacing: 0.01em;
 }
 
-/* Bubble content card */
 .bubble__content {
   background: var(--color-bubble-assistant);
   border-radius: var(--radius-bubble);
