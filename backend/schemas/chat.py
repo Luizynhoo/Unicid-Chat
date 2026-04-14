@@ -7,3 +7,5 @@ class ChatRequest(BaseModel):
 # O que o frontend recebe
 class ChatResponse(BaseModel):
     resposta: str = Field(..., example="Um dia tem 1440 minutos.")  
+
+
