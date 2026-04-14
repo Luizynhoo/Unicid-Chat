@@ -15,7 +15,7 @@ def perguntar_ia(prompt: str) -> str:
     }
 
     data = {
-        "model": "stepfun/step-3.5-flash:free",
+        "model": "openai/gpt-3.5-turbo",
         "messages": [
             {
                 "role": "system", 
@@ -29,17 +29,37 @@ def perguntar_ia(prompt: str) -> str:
     }
 
     try:
+        print("API KEY:", API_KEY) 
+
         response = requests.post(url, headers=headers, json=data, timeout=15)
 
+        print("STATUS:", response.status_code)
+        print("RESPOSTA:", response.text)
+
         if response.status_code != 200:
-            raise Exception(f"Erro na IA: {response.text}")
+            return "Erro ao consultar IA"
 
         result = response.json()
 
-        return result["choices"][0]["message"]["content"]
+        if "error" in result:
+            print("Erro da API:", result["error"])
+            return "Erro na API de IA"
+
+        if "choices" in result and len(result["choices"]) > 0:
+            choice = result["choices"][0]
+
+            if "message" in choice and "content" in choice["message"]:
+                return choice["message"]["content"]
+
+            if "text" in choice:
+                return choice["text"]
+
+        print("Formato inesperado da resposta:", result)
+        return "Erro ao processar resposta da IA"
 
     except requests.exceptions.Timeout:
-        raise Exception("A IA demorou para responder.")
+        return "A IA demorou para responder."
 
     except Exception as e:
-        raise Exception(f"Erro ao comunicar com IA: {str(e)}")
+        print("ERRO:", str(e))
+        return "Erro interno ao comunicar com IA"
