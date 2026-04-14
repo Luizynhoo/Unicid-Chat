@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { ChatArea } from '../components/features/ChatArea';
 import { sendMessage } from '../services/chatService';
 import '../styles/pages/ChatPage.css';
+import { postMetricas } from '../services/metricas';
 
 export default function ChatPage() {
+    const [isCreating, setIsCreating] = useState(false);
 
     const [messages, setMessages] = useState([
         {
@@ -53,26 +55,30 @@ export default function ChatPage() {
     };
 
     const newConversation = async () => {
-        setMessages([
-            {
-                id: 0,
-                role: 'assistant',
-                type: 'welcome',
-                content: '',
-                timestamp: new Date(),
-            }
-        ]);
-        setInput('');
-        setIsTyping(false);
+        if(isCreating) return;
+
+        setIsCreating(true);
 
         try {
-            //criar endpoint específico para isso ainda
-            // await api.post('/chat/nova-conversa');
+            await postMetricas();
+
+            setMessages([
+                {
+                    id: 0,
+                    role: 'assistant',
+                    type: 'welcome',
+                    content: '',
+                    timestamp: new Date(),
+                }
+            ]);
+            setInput('');
+            setIsTyping(false);
+
         } catch (error) {
-            console.log('backend ainda não implementado');
+            console.log('Erro ao registrar métrica');
+        } finally {
+            setIsCreating(false);
         }
-
-
     };
 
     return (
@@ -84,6 +90,7 @@ export default function ChatPage() {
                 onSend={sendMessageHandler}
                 onNewConversation={newConversation}
                 isTyping={isTyping}
+                isCreating={isCreating}
             />
         </div >
     )
