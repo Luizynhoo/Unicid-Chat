@@ -19,9 +19,11 @@ export function ChatInput({ value, onChange, onSend, disabled }) {
     }
   }
 
+  const hasContent = value.trim().length > 0;
+
   return (
     <div className="chat-input">
-      <div className="chat-input__wrapper">
+      <div className={`chat-input__wrapper${hasContent ? ' chat-input__wrapper--active' : ''}`}>
         <textarea
           ref={textareaRef}
           className="chat-input__textarea"
@@ -33,15 +35,20 @@ export function ChatInput({ value, onChange, onSend, disabled }) {
           rows={1}
           aria-label="Campo de mensagem"
         />
+
         <button
-          className="chat-input__send"
+          className={`chat-input__send${hasContent && !disabled ? ' chat-input__send--ready' : ''}`}
           onClick={() => onSend(value)}
-          disabled={disabled || !value.trim()}
+          disabled={disabled || !hasContent}
           aria-label="Enviar mensagem"
         >
-          <Send size={18} />
+          <Send size={16} />
         </button>
       </div>
+
+      <p className="chat-input__hint" aria-hidden="true">
+        Enter para enviar · Shift + Enter para nova linha
+      </p>
     </div>
   );
 }

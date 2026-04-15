@@ -1,27 +1,26 @@
-import "./Header.css";
+import "./header.css";
 import logo from '../../../assets/logo-negativo_17.svg';
-import Button from "../../ui/Button";
 import { useNavigate } from "react-router-dom";
+import { LogOut } from "lucide-react";
 
 export default function Header() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handleLogout = () => {
-        localStorage.removeItem('tipo');
-        navigate('/login');
-    }
+  const handleLogout = () => {
+    localStorage.removeItem('tipo');
+    navigate('/login');
+  };
 
-    return (
-        <header className="container-header">
-            <div className="header-logo">
-                <img src={logo} alt="Logo da UNICID" />
-            </div>
-            <div>
-                <Button onClick={handleLogout}>
-                    Sair
-                </Button>
+  return (
+    <header className="app-header">
+      <div className="app-header__logo">
+        <img src={logo} alt="UNICID" />
+      </div>
 
-            </div>
-        </header>
-    )
+      <button className="app-header__logout" onClick={handleLogout} aria-label="Sair da conta">
+        <LogOut size={14} />
+        <span>Sair</span>
+      </button>
+    </header>
+  );
 }

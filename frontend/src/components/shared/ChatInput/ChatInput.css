@@ -1,73 +1,121 @@
+/* ─────────────────────────────────────────
+   ChatInput — barra de entrada inferior
+───────────────────────────────────────── */
 .chat-input {
-  position: fixed;
+  position: sticky;
   bottom: 0;
-  left: 0;
   width: 100%;
-
-  padding: 16px 24px 20px;
+  padding: 12px 24px 16px;
   background: var(--color-chat-bg);
-  border-top: 1px solid var(--color-border);
+  /* fade suave acima da barra para sumir as mensagens */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 28px);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 28px);
 }
 
+
+/* ── Wrapper (borda + foco) ── */
 .chat-input__wrapper {
   max-width: 820px;
   margin: 0 auto;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 10px;
   background: var(--color-input-bg);
-      border: 1.5px solid var(--color-input-border);
-      border-radius: 6px;
-  padding: 10px 14px 10px 20px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  border: 1.5px solid var(--color-input-border);
+  border-radius: 14px;
+  padding: 10px 10px 10px 18px;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .chat-input__wrapper:focus-within {
-  border-color: var(--color-brand);
-  box-shadow: 0 0 0 3px var(--color-brand-glow);
+  border-color: var(--color-details);
+  box-shadow: 0 0 0 3px rgba(0, 168, 143, 0.12);
 }
 
+/* Quando há conteúdo digitado, eleva levemente */
+.chat-input__wrapper--active {
+  border-color: rgba(0, 168, 143, 0.45);
+  box-shadow: 0 0 0 3px rgba(0, 168, 143, 0.08);
+}
+
+
+/* ── Textarea ── */
 .chat-input__textarea {
   flex: 1;
   background: none;
   border: none;
   outline: none;
   resize: none;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   color: var(--color-text-primary);
-  line-height: 1.5;
+  line-height: 1.6;
   max-height: 160px;
   font-family: inherit;
   overflow-y: auto;
   scrollbar-width: none;
+  padding: 4px 0;       /* alinha verticalmente com o botão */
 }
+
+.chat-input__textarea::-webkit-scrollbar { display: none; }
 
 .chat-input__textarea::placeholder {
   color: var(--color-text-placeholder);
 }
 
+.chat-input__textarea:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+/* ── Botão Enviar ── */
 .chat-input__send {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 36px;
   height: 36px;
   min-width: 36px;
-  border-radius: 50%;
+  border-radius: 10px;
   border: none;
-  background: var(--color-sidebar-divider);
-  color: var(--color-details);
-  display: flex;  
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.2s ease, transform 0.15s ease, opacity 0.2s ease;
+  background: var(--color-border);
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+  /* transição de cor/escala ao habilitar */
+  transition: background 0.2s, color 0.2s, transform 0.15s, opacity 0.2s;
   flex-shrink: 0;
 }
 
-.chat-input__send:hover:not(:disabled) {
-  background: var(--color-brand-dark);
-  transform: scale(1.05);
+/* Estado pronto — há texto e não está processando */
+.chat-input__send--ready {
+  background: var(--color-details);
+  color: #ffffff;
+  cursor: pointer;
 }
 
-.chat-input__send:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
+.chat-input__send--ready:hover {
+  background: #009a83;          /* details um tom mais escuro */
+  transform: scale(1.06);
+}
+
+.chat-input__send--ready:active {
+  transform: scale(0.96);
+}
+
+.chat-input__send:disabled:not(.chat-input__send--ready) {
+  opacity: 0.45;
+}
+
+
+/* ── Hint (atalhos de teclado) ── */
+.chat-input__hint {
+  max-width: 820px;
+  margin: 6px auto 0;
+  text-align: center;
+  font-size: 0.68rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.02em;
+  opacity: 0.7;
+  pointer-events: none;
+  user-select: none;
 }

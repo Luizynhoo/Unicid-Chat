@@ -1,30 +1,19 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
+from services import metricas as metricas_services
 
-router = APIRouter(prefix= "/metricas", tags= ["metricas"])
-
-
-total_conversas = 0
-
-
-
-def criar_conversa():
-    global total_conversas
-    total_conversas += 1
-
-    return {"mensagem": "Conversa criada com sucesso"}
-
-
-def obter_metricas():
-    return {
-        "total_conversas": total_conversas
-    }
-
+router = APIRouter(prefix="/metricas", tags=["metricas"])
 
 
 @router.post("/")
 def post_metricas():
-    return criar_conversa()
+    return metricas_services.criar_conversa()
+
+
+@router.post("/feedback")
+def post_feedback(ajudou: bool):
+    return metricas_services.registrar_feedback(ajudou)
+
 
 @router.get("/")
 def get_metricas():
-    return obter_metricas()
+    return metricas_services.obter_metricas()

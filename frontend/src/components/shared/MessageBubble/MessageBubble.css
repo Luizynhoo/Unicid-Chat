@@ -1,99 +1,167 @@
 .bubble {
   display: flex;
   gap: 12px;
-  max-width: 720px;
-  animation: bubbleFadeIn 0.25s ease both;
+  margin-bottom: 20px;
+  max-width: 78%;
+  animation: bubbleFadeIn 0.3s ease forwards;
 }
 
-@keyframes bubbleFadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0);   }
+.bubble--assistant {
+  align-self: flex-start;
 }
 
 .bubble--user {
   flex-direction: row-reverse;
   align-self: flex-end;
   margin-left: auto;
+  max-width: 70%;
 }
 
+@keyframes bubbleFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ====================== AVATAR ====================== */
 .bubble__avatar {
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
   border-radius: 50%;
   background: var(--color-brand);
-  color: var(--color-details);
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0, 168, 143, 0.25);
+  font-size: 18px;
   margin-top: 2px;
 }
 
+/* ====================== BODY ====================== */
 .bubble__body {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
+  max-width: 100%;
 }
 
-.bubble__sender {
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--color-text-primary);
-  letter-spacing: 0.01em;
-}
-
-.bubble__content {
+/* Bolha do Assistente */
+.bubble--assistant .bubble__body {
   background: var(--color-bubble-assistant);
   border-radius: var(--radius-bubble);
   padding: 14px 18px;
-  box-shadow: 0 1px 3px rgba(0,0,0,.06);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid #f0f2f5;
 }
 
-.bubble--user .bubble__content {
+/* Bolha do Usuário */
+.bubble--user .bubble__body {
   background: var(--color-bubble-user);
-  color: #fff;
+  color: white;
   border-radius: var(--radius-bubble) var(--radius-bubble) 4px var(--radius-bubble);
+  padding: 14px 18px;
+  box-shadow: 0 2px 12px rgba(0, 168, 143, 0.25);
+}
+
+/* ====================== SENDER ====================== */
+.bubble__sender {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-details);
+  letter-spacing: 0.02em;
+}
+
+/* ====================== CONTEÚDO ====================== */
+.bubble__content {
+  font-size: 0.92rem;
+  line-height: 1.45;
 }
 
 .bubble__text {
   margin: 0;
-  font-size: 0.88rem;
-  line-height: 1.6;
-  color: var(--color-text-primary);
+  color: inherit;
 }
 
-.bubble--user .bubble__text {
-  color: #fff;
-}
-
+/* Tempo */
 .bubble__time {
-  font-size: 0.72rem;
+  font-size: 10.5px;
   color: var(--color-text-muted);
+  margin-top: 4px;
+  opacity: 0.85;
   align-self: flex-end;
 }
 
-/* Typing indicator */
-.bubble__content--typing {
+/* ====================== BOTÕES ====================== */
+.bubble__agendar-btn {
+  margin-top: 12px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: var(--color-details);
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 14.5px;
+  box-shadow: 0 2px 8px rgba(0, 168, 143, 0.3);
+  transition: all 0.2s ease;
+}
+
+.bubble__agendar-btn:hover {
+  background: #008f79;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 168, 143, 0.35);
+}
+
+/* Feedback */
+.bubble__feedback {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.bubble__feedback button {
+  background: transparent;
+  border: 1px solid #e2e5ea;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
-  gap: 5px;
-  padding: 12px 16px;
-  min-height: 44px;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.bubble__feedback button:hover {
+  background: #f8f9fb;
+  border-color: var(--color-details);
+  transform: scale(1.1);
+}
+
+/* ====================== TYPING INDICATOR ====================== */
+.bubble__content--typing {
+  padding: 12px 18px;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .typing-dot {
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: var(--color-text-muted);
-  animation: typingBounce 1.2s ease-in-out infinite;
+  background: var(--color-details);
+  animation: typingBounce 1.3s infinite ease-in-out;
 }
 
 .typing-dot:nth-child(2) { animation-delay: 0.2s; }
 .typing-dot:nth-child(3) { animation-delay: 0.4s; }
 
 @keyframes typingBounce {
-  0%, 80%, 100% { transform: translateY(0);   opacity: 0.4; }
-  40%            { transform: translateY(-6px); opacity: 1;   }
+  0%, 80%, 100% { transform: translateY(0); }
+  40%            { transform: translateY(-7px); }
 }

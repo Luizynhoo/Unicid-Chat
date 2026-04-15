@@ -6,6 +6,10 @@ export const postMetricas = async () => {
 }
 
 export const getMetricas = async () => {
-    const response = await api.get('metricas/');
+    const response = await api.get('/metricas/');
     return response.data;
 }
+
+export const postFeedback = async (isGood) => {
+    return api.post(`/metricas/feedback?ajudou=${isGood}`);
+};

@@ -2,32 +2,33 @@
 
 :root {
 
-  --color-sidebar-bg:      #1a2132;
-  --color-sidebar-hover:   rgba(0,168,142,.2);
-  --color-sidebar-active:  rgba(0, 168, 143, 0.644);
-  --color-sidebar-divider: rgba(255,255,255,0.08);
-  --color-sidebar-scroll:  rgba(255,255,255,0.12);
+  --color-sidebar-bg: #1a2132;
+  --color-sidebar-hover: rgba(0, 168, 142, .2);
+  --color-sidebar-active: rgba(0, 168, 143, 0.644);
+  --color-sidebar-divider: rgba(255, 255, 255, 0.08);
+  --color-sidebar-scroll: rgba(255, 255, 255, 0.12);
 
-  --color-chat-bg:     #f5f6f8;
-  --color-border:      #e2e5ea;
+  --color-chat-bg: #f8f9fb;
+  --color-border: #e2e5ea;
 
   --color-bubble-assistant: #ffffff;
-  --color-bubble-user:      #1e4fd8;
-  --radius-bubble:          18px;
+  --color-bubble-user: #00a88f;
+  --radius-bubble: 6px;
 
 
-  --color-input-bg:          #ffffff;
-  --color-input-border:      #dde1e9;
+  --color-input-bg: #ffffff;
+  --color-input-border: #dde1e9;
 
 
-  --color-text-primary:     #1a2132;
-  --color-text-muted:       #B8C7CE;
+  --color-text-primary: #1a2132;
+  --color-text-muted: #B8C7CE;
   --color-text-placeholder: #adb5bf;
-  --color-details:        #00a88f;
+  --color-details: #00a88f;
+  --color-brand: #00a88f;
 
 
   --font-family: 'DM Sans', system-ui, sans-serif;
-  --font-mono:   'DM Mono', monospace;
+  --font-mono: 'DM Mono', monospace;
   --font-login: 'Sora', sans-serif;
 }
 
@@ -39,7 +40,9 @@
   padding: 0;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
   width: 100%;
 }
@@ -60,7 +63,8 @@ textarea {
   font-family: inherit;
 }
 
-img, svg {
+img,
+svg {
   display: block;
 }
 
