@@ -3,3 +3,7 @@ uvicorn
 python-dotenv
 requests
 PyPDF2
+
+
+# tem esse tbm 
+# pip install python-multipart PyPDF2

@@ -1,6 +1,7 @@
 import requests
 import os
 from dotenv import load_dotenv
+from services.pdf import listar_pdfs
 
 load_dotenv()
 
@@ -14,23 +15,42 @@ def perguntar_ia(prompt: str) -> str:
         "Content-Type": "application/json"
     }
 
+    contexto = ""
+
+    for pdf in listar_pdfs():
+        contexto += f"\n[{pdf['tipo'].upper()} - {pdf['nome']}]\n"
+        contexto += pdf["conteudo"][:1000].rsplit('.', 1)[0]
+
+    contexto += f"\n[{pdf['tipo'].upper()} - {pdf['nome']} - {pdf['data']}]\n"
+
     data = {
         "model": "openai/gpt-3.5-turbo",
         "messages": [
             {
-                "role": "system", 
-                "content": "Responda de forma direta, clara e resumida. Evite textos longos."
+                "role": "system",
+                "content": f"""
+                Você é um assistente da universidade UNICID.
+
+                Use o contexto abaixo para responder as perguntas dos alunos:
+
+                CONTEXTO:
+                {contexto}
+
+                Regras:
+                - Seja direto e claro
+                - Responda com base no contexto abaixo. Você pode interpretar as informações, mas NÃO invente dados que não estejam presentes.
+                - Se não souber, diga que não sabe e segere para a pessoa fazer um agendamento educadamente.
+                - se a pergunta for sobre um assunto que não esteja no contexto, diga que não tem essa informação e sugira fazer um agendamento educadamente.
+                """
             },
             {
-                "role": "user", 
+                "role": "user",
                 "content": prompt
             }
         ]
     }
 
     try:
-        print("API KEY:", API_KEY) 
-
         response = requests.post(url, headers=headers, json=data, timeout=15)
 
         print("STATUS:", response.status_code)
@@ -54,7 +74,7 @@ def perguntar_ia(prompt: str) -> str:
             if "text" in choice:
                 return choice["text"]
 
-        print("Formato inesperado da resposta:", result)
+        print("Formato inesperado:", result)
         return "Erro ao processar resposta da IA"
 
     except requests.exceptions.Timeout:
