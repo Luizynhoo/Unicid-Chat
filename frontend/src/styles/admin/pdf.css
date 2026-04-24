@@ -1,0 +1,460 @@
+
+.pdf-manager {
+    margin-top: 36px;
+    position: relative;
+}
+
+.pdf-manager__header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.pdf-manager__header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.pdf-manager__header-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(0, 168, 143, 0.1);
+    color: var(--color-details);
+    flex-shrink: 0;
+}
+
+.pdf-manager__title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+.pdf-manager__subtitle {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin: 2px 0 0;
+}
+
+
+/* ── Grid de dois painéis ── */
+.pdf-manager__grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 16px;
+    align-items: start;
+}
+
+@media (max-width: 720px) {
+    .pdf-manager__grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ── Label de campo ── */
+.pdf-manager__field-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 0 0 10px;
+}
+
+
+/* ═══════════════════════════════════════════
+   Upload Panel
+═══════════════════════════════════════════ */
+.pdf-manager__upload-panel {
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+
+/* ── Seletor de tipo ── */
+.pdf-manager__tipo-group {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.pdf-manager__tipo-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1.5px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text-muted);
+    font-size: 0.78rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.pdf-manager__tipo-btn:hover {
+    border-color: var(--color-details);
+    color: var(--color-details);
+}
+
+.pdf-manager__tipo-btn--active {
+    border-color: var(--color-details);
+    background: rgba(0, 168, 143, 0.08);
+    color: var(--color-details);
+    font-weight: 600;
+}
+
+
+/* ── Drop Zone ── */
+.pdf-manager__dropzone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 36px 20px;
+    border: 2px dashed var(--color-border);
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: center;
+    transition: border-color 0.18s, background 0.18s;
+    user-select: none;
+    outline: none;
+}
+
+.pdf-manager__dropzone:focus-visible {
+    box-shadow: 0 0 0 3px rgba(0, 168, 143, 0.2);
+}
+
+.pdf-manager__dropzone:hover:not(.pdf-manager__dropzone--uploading) {
+    border-color: var(--color-details);
+    background: rgba(0, 168, 143, 0.03);
+}
+
+.pdf-manager__dropzone--over {
+    border-color: var(--color-details);
+    background: rgba(0, 168, 143, 0.06);
+    border-style: solid;
+}
+
+.pdf-manager__dropzone--uploading {
+    cursor: default;
+    opacity: 0.7;
+}
+
+.pdf-manager__dropzone-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: var(--color-chat-bg);
+    color: var(--color-text-muted);
+    transition: background 0.18s, color 0.18s, transform 0.2s;
+    margin-bottom: 4px;
+}
+
+.pdf-manager__dropzone:hover .pdf-manager__dropzone-icon,
+.pdf-manager__dropzone-icon--over {
+    background: rgba(0, 168, 143, 0.1);
+    color: var(--color-details);
+    transform: translateY(-3px);
+}
+
+.pdf-manager__dropzone-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.pdf-manager__dropzone-hint {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin: 0;
+    min-height: 1em;
+}
+
+
+/* ── Spinner de upload ── */
+.pdf-manager__spinner {
+    display: block;
+    width: 24px;
+    height: 24px;
+    border: 2.5px solid rgba(0, 168, 143, 0.2);
+    border-top-color: var(--color-details);
+    border-radius: 50%;
+    animation: spin 0.75s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* ═══════════════════════════════════════════
+   Lista de PDFs
+═══════════════════════════════════════════ */
+.pdf-manager__list-panel {
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    padding: 20px;
+    min-height: 200px;
+}
+
+.pdf-manager__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 160px;
+    text-align: center;
+    font-size: 0.825rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+}
+
+.pdf-manager__empty-icon {
+    color: var(--color-border);
+}
+
+.pdf-manager__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.pdf-manager__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    transition: background 0.14s, border-color 0.14s;
+    /* entrada em cascata */
+    animation: row-in 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: calc(var(--i, 0) * 30ms);
+}
+
+.pdf-manager__item:hover {
+    background: var(--color-chat-bg);
+    border-color: var(--color-border);
+}
+
+@keyframes row-in {
+    from {
+        opacity: 0;
+        transform: translateX(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.pdf-manager__item-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+    background: rgba(0, 168, 143, 0.08);
+    color: var(--color-details);
+    flex-shrink: 0;
+}
+
+.pdf-manager__item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.pdf-manager__item-name {
+    font-size: 0.825rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pdf-manager__item-tipo {
+    font-size: 0.68rem;
+    color: var(--color-details);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+
+/* ═══════════════════════════════════════════
+   Toast
+═══════════════════════════════════════════ */
+.pdf-toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-size: 0.825rem;
+    font-weight: 500;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    z-index: 200;
+    animation: toast-in 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes toast-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.pdf-toast--success {
+    background: #ffffff;
+    border: 1px solid var(--color-details);
+    color: var(--color-details);
+}
+
+.pdf-toast--error {
+    background: #ffffff;
+    border: 1px solid #dc2626;
+    color: #dc2626;
+}
+
+
+/* ═══════════════════════════════════════════
+   PDF Modal — preview do arquivo + hint
+═══════════════════════════════════════════ */
+.pdf-modal__file-preview {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--color-chat-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    margin-bottom: 4px;
+}
+
+.pdf-modal__file-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: rgba(0, 168, 143, 0.1);
+    color: var(--color-details);
+    flex-shrink: 0;
+}
+
+.pdf-modal__file-name {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+}
+
+.pdf-modal__field-hint {
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+    margin: 6px 0 0;
+}
+
+.pdf-modal__field-hint code {
+    font-family: 'Menlo', 'Consolas', monospace;
+    background: var(--color-chat-bg);
+    border: 1px solid var(--color-border);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    color: var(--color-details);
+}
+
+
+/* ── Botão deletar PDF ── */
+.pdf-manager__delete-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-left: auto;
+    opacity: 0;
+    transition: opacity 0.15s, background 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
+}
+
+.pdf-manager__item:hover .pdf-manager__delete-btn {
+    opacity: 1;
+}
+
+.pdf-manager__delete-btn:hover {
+    background: rgba(220, 38, 38, 0.07);
+    border-color: #dc2626;
+    color: #dc2626;
+}
+
+.pdf-manager__delete-btn:active {
+    transform: scale(0.92);
+}
+
+.pdf-manager__delete-btn:disabled {
+    opacity: 1;
+    cursor: not-allowed;
+}
+
+.pdf-manager__item--deleting {
+    opacity: 0.4;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+/* Spinner pequeno para o botão de delete */
+.pdf-manager__spinner--sm {
+    width: 13px;
+    height: 13px;
+    border-width: 2px;
+}

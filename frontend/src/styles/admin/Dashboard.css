@@ -1,0 +1,11 @@
+.admin-page {
+    padding: 30px;
+    background: var(--color-chat-bg);
+    min-height: 100vh;
+}
+
+.dashboard__title {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    color: var(--color-text-primary);
+}

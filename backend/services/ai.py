@@ -7,6 +7,34 @@ load_dotenv()
 
 API_KEY = os.getenv("OPENROUTER_API_KEY")
 
+def resumir_texto(texto, limite=300):
+    texto = texto.replace("\n", " ").strip()
+
+    if len(texto) <= limite:
+        return texto
+
+    corte = texto[:limite]
+
+    if "." in corte:
+        corte = corte.rsplit(".", 1)[0] + "."
+
+    return corte
+
+
+def gerar_contexto():
+    contexto = ""
+
+    pdfs = listar_pdfs()[:2] 
+
+    for pdf in pdfs:
+        resumo = resumir_texto(pdf["conteudo"], 300)
+
+        contexto += f"\n[{pdf['tipo'].upper()} - {pdf['nome']}]\n"
+        contexto += resumo + "\n"
+
+    return contexto
+
+
 def perguntar_ia(prompt: str) -> str:
     url = "https://openrouter.ai/api/v1/chat/completions"
 
@@ -15,71 +43,58 @@ def perguntar_ia(prompt: str) -> str:
         "Content-Type": "application/json"
     }
 
-    contexto = ""
+    contexto = gerar_contexto()
 
-    for pdf in listar_pdfs():
-        contexto += f"\n[{pdf['tipo'].upper()} - {pdf['nome']}]\n"
-        contexto += pdf["conteudo"][:1000].rsplit('.', 1)[0]
+    models = [
+        "mistralai/mistral-7b-instruct",
+        "meta-llama/llama-3-8b-instruct",
+        "google/gemma-7b-it"
+    ]
 
-    contexto += f"\n[{pdf['tipo'].upper()} - {pdf['nome']} - {pdf['data']}]\n"
+    for model in models:
+        data = {
+            "model": model,
+            "temperature": 0.3,
+            "max_tokens": 250,
+            "messages": [
+                {
+                    "role": "system",
+                    "content": f"""
+Você é um assistente da UNICID.
 
-    data = {
-        "model": "openai/gpt-3.5-turbo",
-        "messages": [
-            {
-                "role": "system",
-                "content": f"""
-                Você é um assistente da universidade UNICID.
+Use o CONTEXTO para responder.
 
-                Use o contexto abaixo para responder as perguntas dos alunos:
+Regras:
+    - Seja direto e claro
+    - Responda com base no contexto abaixo. Você pode interpretar as informações, mas NÃO invente dados que não estejam presentes.
+    - Se não souber, diga que não sabe e segere para a pessoa fazer um agendamento educadamente.
+    - se a pergunta for sobre um assunto que não esteja no contexto, diga que não tem essa informação e sugira fazer um agendamento educadamente.
 
-                CONTEXTO:
-                {contexto}
+CONTEXTO:
+{contexto}
+"""
+                },
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ]
+        }
 
-                Regras:
-                - Seja direto e claro
-                - Responda com base no contexto abaixo. Você pode interpretar as informações, mas NÃO invente dados que não estejam presentes.
-                - Se não souber, diga que não sabe e segere para a pessoa fazer um agendamento educadamente.
-                - se a pergunta for sobre um assunto que não esteja no contexto, diga que não tem essa informação e sugira fazer um agendamento educadamente.
-                """
-            },
-            {
-                "role": "user",
-                "content": prompt
-            }
-        ]
-    }
+        try:
+            response = requests.post(url, headers=headers, json=data, timeout=10)
 
-    try:
-        response = requests.post(url, headers=headers, json=data, timeout=15)
+            if response.status_code == 200:
+                result = response.json()
 
-        print("STATUS:", response.status_code)
-        print("RESPOSTA:", response.text)
+                if "choices" in result:
+                    print(f"Resposta via modelo: {model}")
+                    return result["choices"][0]["message"]["content"]
 
-        if response.status_code != 200:
-            return "Erro ao consultar IA"
+            else:
+                print(f"Erro {model}:", response.text)
 
-        result = response.json()
+        except Exception as e:
+            print(f"Erro {model}:", str(e))
 
-        if "error" in result:
-            print("Erro da API:", result["error"])
-            return "Erro na API de IA"
-
-        if "choices" in result and len(result["choices"]) > 0:
-            choice = result["choices"][0]
-
-            if "message" in choice and "content" in choice["message"]:
-                return choice["message"]["content"]
-
-            if "text" in choice:
-                return choice["text"]
-
-        print("Formato inesperado:", result)
-        return "Erro ao processar resposta da IA"
-
-    except requests.exceptions.Timeout:
-        return "A IA demorou para responder."
-
-    except Exception as e:
-        print("ERRO:", str(e))
-        return "Erro interno ao comunicar com IA"
+    return "Todos os modelos falharam no momento."

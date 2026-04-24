@@ -27,7 +27,7 @@ export function MessageBubble({ message, onOpenModal, onFeedback }) {
         </div>
 
         {message.showAgendar && (
-          <button 
+          <button
             className="bubble__agendar-btn"
             onClick={onOpenModal}
           >
@@ -37,8 +37,8 @@ export function MessageBubble({ message, onOpenModal, onFeedback }) {
 
         {isAssistant && message.type !== 'welcome' && (
           <div className="bubble__feedback">
-            <button onClick={() => onFeedback(true)}>👍</button>
-            <button onClick={() => onFeedback(false)}>👎</button>
+            <button onClick={() => onFeedback(true, message)}>👍</button>
+            <button onClick={() => onFeedback(false, message)}>👎</button>
           </div>
         )}
 

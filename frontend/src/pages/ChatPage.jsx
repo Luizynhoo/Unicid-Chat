@@ -116,39 +116,30 @@ export default function ChatPage() {
     };
 
     // 👍 👎 Feedback com lógica completa
-    const handleFeedback = async (isGood) => {
-        try {
-            await postFeedback(isGood);
+const handleFeedback = async (isGood, lastMessage) => {
+    try {
+        await postFeedback(isGood);
 
-            // 👍 positivo
-            if (isGood) {
-                const msg = {
-                    id: Date.now(),
-                    role: 'assistant',
-                    content: "Fico feliz em ajudar! 😊",
-                    timestamp: new Date()
-                };
-
-                setMessages(prev => [...prev, msg]);
-            }
-
-            // 👎 negativo → sugere agendamento
-            if (!isGood) {
-                const botMessage = {
-                    id: Date.now(),
-                    role: 'assistant',
-                    content: "Talvez possamos te ajudar melhor com um atendimento presencial. Deseja agendar?",
-                    showAgendar: true,
-                    timestamp: new Date()
-                };
-
-                setMessages(prev => [...prev, botMessage]);
-            }
-
-        } catch (error) {
-            console.log("Erro ao enviar feedback");
+        if (isGood) {
+            return;
         }
-    };
+
+        if (!isGood) {
+            const botMessage = {
+                id: Date.now(),
+                role: 'assistant',
+                content: "Talvez possamos te ajudar melhor com um atendimento presencial. Deseja agendar?",
+                showAgendar: true,
+                timestamp: new Date()
+            };
+
+            setMessages(prev => [...prev, botMessage]);
+        }
+
+    } catch (error) {
+        console.log("Erro ao enviar feedback");
+    }
+};
 
     // 🪟 Abrir modal
     const handleOpenModal = () => {
