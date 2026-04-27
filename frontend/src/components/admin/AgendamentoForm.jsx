@@ -3,9 +3,10 @@ import { X, CalendarDays } from 'lucide-react';
 import { postAgendamento, editAgendamento } from '../../services/agendamento';
 import '../../styles/admin/agendamentos.css';
 
-export default function AgendamentoForm({ onClose, onSuccess, editing }) {
+export default function AgendamentoForm({ onClose, onSuccess, editing, showToast }) {
   const [form, setForm] = useState({ nome: '', rgm: '', data: '', hora: '' });
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (editing) setForm(editing);

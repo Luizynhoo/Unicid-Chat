@@ -1,22 +1,53 @@
 import { useState } from "react";
 import { postAgendamento } from "../../../services/agendamento";
 import './AgendamentoModal.css';
+import { useToast } from '../../../hooks/useToast';
+import Toast from "../../ui/Toast";
 
 export default function AgendamentoModal({ onClose }) {
     const [nome, setNome] = useState('');
     const [rgm, setRgm] = useState('');
     const [data, setData] = useState('');
     const [hora, setHora] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+    const { toast, showToast, setToast } = useToast();
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         if (!nome || !rgm || !data || !hora) {
-            alert("Por favor, preencha todos os campos.");
+            setError("Preencha todos os campos.");
             return;
         }
 
-        await postAgendamento(nome, rgm, data, hora);
-        onClose();
+        setLoading(true);
+        setError('');
+
+        try {
+            await postAgendamento(nome, rgm, data, hora);
+
+            window.dispatchEvent(new Event('novo-agendamento'));
+
+            showToast("Agendamento realizado com sucesso!", "success");;
+
+            setTimeout(() => {
+                onClose();
+            }, 1100);
+
+        } catch (err) {
+            console.log(err);
+
+            const mensagem =
+                err.response?.data?.detail ||
+                "Erro ao realizar agendamento.";
+
+            showToast(mensagem, "error");
+
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -78,12 +109,20 @@ export default function AgendamentoModal({ onClose }) {
                         <button type="button" className="btn-cancel" onClick={onClose}>
                             Cancelar
                         </button>
-                        <button type="submit" className="btn-confirm">
-                            Confirmar Agendamento
+                        <button type="submit" className="btn-confirm" disabled={loading}>
+                            {loading ? "Enviando..." : "Confirmar Agendamento"}
                         </button>
                     </div>
                 </form>
             </div>
+
+            {toast && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    onClose={() => setToast(null)}
+                />
+            )}
         </div>
     );
 }

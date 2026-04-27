@@ -26,22 +26,6 @@ export function MessageBubble({ message, onOpenModal, onFeedback }) {
           }
         </div>
 
-        {message.showAgendar && (
-          <button
-            className="bubble__agendar-btn"
-            onClick={onOpenModal}
-          >
-            Agendar
-          </button>
-        )}
-
-        {isAssistant && message.type !== 'welcome' && (
-          <div className="bubble__feedback">
-            <button onClick={() => onFeedback(true, message)}>👍</button>
-            <button onClick={() => onFeedback(false, message)}>👎</button>
-          </div>
-        )}
-
         <time className="bubble__time">
           {message.timestamp.toLocaleTimeString('pt-BR', {
             hour: '2-digit', minute: '2-digit'

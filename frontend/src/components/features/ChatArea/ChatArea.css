@@ -246,3 +246,25 @@
 .chat-area__feedback-btn:active {
   transform: scale(0.95);
 }
+
+.chat-area__feedback-btn {
+  opacity: 0.6;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.chat-area__feedback-btn:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.chat-area__feedback-btn.active {
+  background: #10a37f;
+  color: white;
+  opacity: 1;
+}
+
+.chat-area__feedback-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}

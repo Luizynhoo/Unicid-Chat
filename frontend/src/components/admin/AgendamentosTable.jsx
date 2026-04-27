@@ -20,13 +20,38 @@ export default function AgendamentosTable() {
   const [editing, setEditing] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
+  const [lastCount, setLastCount] = useState(0);
+
+
 
   const fetchAgendamentos = async () => {
-    const data = await getAgendamento();
-    setAgendamentos(data);
+    try {
+      const data = await getAgendamento();
+
+      if (data.length !== lastCount) {
+        setAgendamentos(data);
+        setLastCount(data.length);
+      }
+
+    } catch (error) {
+      console.log('Erro ao buscar agendamentos');
+    }
   };
 
-  useEffect(() => { fetchAgendamentos(); }, []);
+  useEffect(() => {
+    fetchAgendamentos();
+
+    const interval = setInterval(fetchAgendamentos, 5000);
+
+    const handleNovo = () => fetchAgendamentos();
+
+    window.addEventListener('novo-agendamento', handleNovo);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('novo-agendamento', handleNovo);
+    };
+  }, []);
 
   const handleDelete = async (id) => {
     setDeletingId(id);

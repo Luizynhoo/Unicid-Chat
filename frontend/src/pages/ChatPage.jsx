@@ -54,7 +54,6 @@ export default function ChatPage() {
 
             let resposta;
 
-            // 🔥 REGRA INTELIGENTE
             if (isAg) {
                 resposta = "Você gostaria de agendar um atendimento presencial?";
             } else {
@@ -66,7 +65,8 @@ export default function ChatPage() {
                 role: 'assistant',
                 content: resposta,
                 timestamp: new Date(),
-                showAgendar: isAg
+                showAgendar: isAg,
+                feedback: null
             };
 
             setMessages((prev) => [...prev, botMessage]);
@@ -77,6 +77,7 @@ export default function ChatPage() {
                 role: 'assistant',
                 content: 'Não conseguimos responder no momento. Por favor, tente novamente mais tarde.',
                 timestamp: new Date(),
+                feedback: null
             };
 
             setMessages((prev) => [...prev, errorMessage]);
@@ -115,33 +116,37 @@ export default function ChatPage() {
         }
     };
 
-    // 👍 👎 Feedback com lógica completa
-const handleFeedback = async (isGood, lastMessage) => {
-    try {
-        await postFeedback(isGood);
+    const handleFeedback = async (messageId, isGood) => {
+        try {
+            await postFeedback(isGood);
 
-        if (isGood) {
-            return;
-        }
+            // 🧠 Atualiza a mensagem clicada
+            setMessages(prev =>
+                prev.map(msg =>
+                    msg.id === messageId
+                        ? { ...msg, feedback: isGood ? 'like' : 'dislike' }
+                        : msg
+                )
+            );
 
-        if (!isGood) {
+            if (isGood) return;
+
             const botMessage = {
                 id: Date.now(),
                 role: 'assistant',
                 content: "Talvez possamos te ajudar melhor com um atendimento presencial. Deseja agendar?",
                 showAgendar: true,
-                timestamp: new Date()
+                timestamp: new Date(),
+                feedback: null
             };
 
             setMessages(prev => [...prev, botMessage]);
+
+        } catch (error) {
+            console.log("Erro ao enviar feedback");
         }
+    };
 
-    } catch (error) {
-        console.log("Erro ao enviar feedback");
-    }
-};
-
-    // 🪟 Abrir modal
     const handleOpenModal = () => {
         setShowModal(true);
     };

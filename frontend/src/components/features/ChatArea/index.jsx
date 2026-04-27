@@ -87,15 +87,20 @@ export function ChatArea({
               <div className="chat-area__feedback">
                 <span className="chat-area__feedback-label">Isso foi útil?</span>
                 <button
-                  className="chat-area__feedback-btn chat-area__feedback-btn--up"
-                  onClick={() => onFeedback(true)}
+                  className={`chat-area__feedback-btn chat-area__feedback-btn--up ${msg.feedback === 'like' ? 'active' : ''
+                    }`}
+                  disabled={msg.feedback !== null}
+                  onClick={() => onFeedback(msg.id, true)}
                   aria-label="Resposta útil"
                 >
                   👍
                 </button>
+
                 <button
-                  className="chat-area__feedback-btn chat-area__feedback-btn--down"
-                  onClick={() => onFeedback(false)}
+                  className={`chat-area__feedback-btn chat-area__feedback-btn--down ${msg.feedback === 'dislike' ? 'active' : ''
+                    }`}
+                  disabled={msg.feedback !== null}
+                  onClick={() => onFeedback(msg.id, false)}
                   aria-label="Resposta não útil"
                 >
                   👎
